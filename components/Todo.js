@@ -28,7 +28,7 @@ const Todo = ({ todo, setTodos }) => {
         }}
         className=" w-full sm:w-1/3 md:w-fit text-[.9rem] font-semibold "
       >
-        created : {todo.created_at}
+        created : {new Date(todo.created_at).toLocaleDateString()}
       </span>
       <div className="w-full sm:w-fit flex flex-wrap items-center justify-evenly gap-2 ">
         <button className="w-fit h-fit p-1 rounded-lg border-[1px] border-white hover:border-violet-600 transition-all">
