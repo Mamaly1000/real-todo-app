@@ -1,5 +1,4 @@
 import addIcon from "./../../assets/icons/add.svg";
-import Link from "next/link";
 import Image from "next/image";
 import Todo from "../../components/Todo";
 import useSWR from "swr";
@@ -36,7 +35,7 @@ const index = () => {
         setDisplayPopUp(false);
         alert(res.data.message);
       })
-      .catch((err) => {
+      .catch((_err) => {
         throw new Error("failed to add todo !");
       });
   };
@@ -49,7 +48,6 @@ const index = () => {
           onChange={(e) => {}}
           className="transition-all min-w-full  lg:min-w-[500px] md:min-w-[300px] h-[50px] ps-2 rounded-lg border-[1px] outline-none focus:border-violet-600"
         />
-
         <button
           onClick={() => setDisplayPopUp(true)}
           className="w-fit flex gap-2 items-center justify-between h-fit rounded-lg bg-violet-600 px-2 py-1 capitalize shadow-md shadow-violet-400 hover:shadow-none transition-all border-[1px] border-transparent hover:border-white"
