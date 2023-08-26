@@ -1,14 +1,16 @@
-import { todos } from "../../../data/todos";
-
-export default function SingleToDoHandler(req, res) {
-  const { todo_id } = req.query;
-  if (req.method === "DELETE") {
-    const newArray = todos.findIndex((todo) => {
-      return todo.id === parseInt(todo_id);
-    });
-    todos.splice(newArray, 1);
+import Todo from "./../../../server/models/todo";
+import dbConnect from "../../../server/utils/dbConnect";
+export default async function SingleToDoHandler(req, res) {
+  await dbConnect();
+  const {
+    query: { todo_id },
+    method,
+  } = req;
+  if (method === "DELETE") {
+    await Todo.findByIdAndDelete(todo_id);
+    const todos = await Todo.find({});
     return res.status(200).json({
-      message: ` todo number ${todo_id} deleted successfuly !`,
+      message: `todo has been deleted successfully !`,
       todos,
     });
   }

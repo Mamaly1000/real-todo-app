@@ -20,6 +20,20 @@ const todoschema = new Schema({
     required: true,
     default: false,
   },
+  category: {
+    type: String,
+    required: true,
+  },
+  priority: {
+    type: Number,
+    required: true,
+    default: 5,
+  },
+  deadline: {
+    type: Date,
+    required: true,
+    default: (Date.now() + 10000000).toLocaleString(),
+  },
 });
 
-export default  models.Todo || model("Todo", todoschema);
+export default models.Todo || model("Todo", todoschema);

@@ -4,13 +4,19 @@ import tickIcon from "./../assets/icons/tick.svg";
 import editIcon from "./../assets/icons/edit.svg";
 import deleteIcon from "./../assets/icons/delete.svg";
 import axios from "axios";
+import Error from "next/error";
 const Todo = ({ todo, setTodos }) => {
   const [clicked, setCicked] = useState(false);
   const deleteToDo = (id) => {
-    axios.delete(`/api/todos/${id}`).then((res) => {
-      setTodos(res.data.todos);
-      alert(res.data.message);
-    });
+    axios
+      .delete(`/api/todos/${id}`)
+      .then((res) => {
+        setTodos(res.data.todos);
+        alert(res.data.message);
+      })
+      .catch((err) => {
+        throw new Error({ title: err });
+      });
   };
   return (
     <div className="min-w-[90%] min-h-[50px] rounded-lg border-white border-[1px] p-2 flex flex-wrap items-center justify-between gap-2 hover:border-violet-600   capitalize font-bold transition-all cursor-pointer">
@@ -28,7 +34,7 @@ const Todo = ({ todo, setTodos }) => {
         }}
         className=" w-full sm:w-1/3 md:w-fit text-[.9rem] font-semibold "
       >
-        created : {new Date(todo.created_at).toLocaleDateString()}
+        created : {new Date(+todo.created_at).toLocaleDateString()}
       </span>
       <div className="w-full sm:w-fit flex flex-wrap items-center justify-evenly gap-2 ">
         <button className="w-fit h-fit p-1 rounded-lg border-[1px] border-white hover:border-violet-600 transition-all">
@@ -38,7 +44,7 @@ const Todo = ({ todo, setTodos }) => {
           <Image src={editIcon} width={25} height={25} alt="edit icon" />
         </button>{" "}
         <button
-          onClick={() => deleteToDo(todo.id)}
+          onClick={() => deleteToDo(todo._id)}
           className="w-fit h-fit p-1 rounded-lg border-[1px] border-white hover:border-violet-600 transition-all"
         >
           <Image src={deleteIcon} width={25} height={25} alt="delete icon" />
