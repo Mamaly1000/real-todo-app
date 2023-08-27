@@ -34,6 +34,11 @@ const todoschema = new Schema({
     required: true,
     default: (Date.now() + 10000000).toLocaleString(),
   },
+  selected_time: {
+    type: String,
+    required: true,
+    default: "",
+  },
 });
 
 export default models.Todo || model("Todo", todoschema);

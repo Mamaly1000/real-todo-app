@@ -4,8 +4,9 @@ import Todo from "../../components/Todo";
 import useSWR from "swr";
 import axios from "axios";
 import Loading from "./../../components/Loading";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import TodoForm from "../../components/TodoForm";
+import bg_pic from "./../../assets/bg-pic.jpg";
 const index = () => {
   const [searchedText, setSearchedText] = useState("");
   const [todos, setTodos] = useState([]);
@@ -24,9 +25,6 @@ const index = () => {
     }
   );
   const [displayPopUp, setDisplayPopUp] = useState(false);
-  if (isLoading || error) {
-    return <Loading />;
-  }
   const addTodo = async (e, data) => {
     e.preventDefault();
     await axios
@@ -49,8 +47,18 @@ const index = () => {
       (todo.category + "").toLowerCase().includes(searchedText.toLowerCase())
     );
   });
+  if (isLoading || error) {
+    return <Loading />;
+  }
   return (
-    <div className="relative w-full p-10 flex flex-col justify-center items-center gap-10 ">
+    <div className="relative w-full p-2 md:p-10 flex flex-col justify-center items-center gap-10 ">
+      <div className="min-w-full min-h-[300px] md:min-h-[500px] flex justify-center items-end max-h-[500px] overflow-hidden  fixed top-0 start-0 -z-10">
+        <Image
+          src={bg_pic}
+          alt="bg-pic"
+          className="w-full md:min-w-[1000px] h-[300px] md:h-[650px]  object-fill"
+        />
+      </div>
       <div className="w-full flex justify-between items-center gap-5 flex-col md:flex-row">
         <input
           type="text"
@@ -69,7 +77,7 @@ const index = () => {
       </div>
       <div className="w-full flex items-center justify-center gap-5 flex-col ">
         {searchedData.map((todo) => {
-          return <Todo setTodos={setTodos} todo={todo} key={todo.id} />;
+          return <Todo setTodos={setTodos} todo={todo} key={todo._id} />;
         })}
       </div>
       {displayPopUp && (

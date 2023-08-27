@@ -40,6 +40,7 @@ a {
   font-size: 12px;
   padding: 15px !important;
   border-radius: 2px !important;
+  transition: all 0.13s linear;
 }
 .react-calendar__navigation__arrow,
 .react-calendar__navigation__label {
@@ -47,8 +48,12 @@ a {
   background-color: rgba(0 0 0 /0.2) !important;
 }
 .react-calendar__tile:hover,
-.react-calendar__navigation__arrow:hover,.react-calendar__navigation__label:hover {
+.react-calendar__navigation__arrow:hover,
+.react-calendar__navigation__label:hover,
+.react-calendar__tile--active {
   background-color: #8687e7 !important;
+  border-radius: 2px !important;
+  transition: all 0.13s linear;
 }
 .react-calendar__month-view__weekdays .react-calendar__month-view__weekdays,
 .react-calendar__month-view__weekdays__weekday {
@@ -62,12 +67,35 @@ a {
   .calendar {
     max-width: 100% !important;
   }
-  .react-calendar__month-view__days{
+  .react-calendar__month-view__days {
     padding-inline-end: 3px;
   }
   .react-calendar__month-view__weekdays .react-calendar__month-view__weekdays,
-.react-calendar__month-view__weekdays__weekday {
-  font-size: 9px !important;
-  font-weight: 400 !important;
+  .react-calendar__month-view__weekdays__weekday {
+    font-size: 9px !important;
+    font-weight: 400 !important;
+  }
 }
+.react-time-picker__wrapper {
+  border: thin solid #979797 !important;
+  border-radius: 4px !important;
+  min-width: 200px;
+}
+.react-time-picker__wrapper button svg {
+  filter: invert(70%) sepia(2%) saturate(9%) hue-rotate(314deg) brightness(87%)
+    contrast(84%) !important;
+}
+.react-time-picker__clock {
+  background: rgba(255 255 255 /0.2) !important;
+  backdrop-filter: blur(10px) !important;
+  color: #ffffff !important;
+  border-radius: 5px !important;
+  box-shadow: 0 0 10px rgba(0 0 0 /0.2) !important;
+}
+.react-time-picker__clock .react-clock__mark {
+  background: #ffffff !important;
+}
+.react-time-picker__inputGroup input {
+  min-width: 30px !important;
+  padding-inline-start: 5px !important;
 }

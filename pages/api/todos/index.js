@@ -11,6 +11,9 @@ export default async function TodosHandler(req, res) {
       created_at: String(Date.now()),
       completed: false,
       category: body.category,
+      priority: body.priority,
+      deadline: new Date(body.deadLine),
+      selected_time: body.selected_time + "",
     });
     const todos = await Todo.find({});
     return res.status(201).json({
