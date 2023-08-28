@@ -24,20 +24,19 @@ export const priorities = [
       "   linear-gradient(to right, #3ab5b0 0%, #3d99be 31%, #56317a 100%)  ",
   },
 ];
+export const categories = [
+  "grocery",
+  "work",
+  "sport",
+  "design",
+  "university",
+  "social",
+  "music",
+  "health",
+  "movie",
+  "home",
+];
 const TodoForm = ({ title, onAdd, setShow }) => {
-  const categories = [
-    "grocery",
-    "work",
-    "sport",
-    "design",
-    "university",
-    "social",
-    "music",
-    "health",
-    "movie",
-    "home",
-  ];
-
   const [formData, setFormData] = useState({
     title: "",
     description: "",

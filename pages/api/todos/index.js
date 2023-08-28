@@ -21,7 +21,12 @@ export default async function TodosHandler(req, res) {
       todos,
     });
   } else if (method === "GET") {
-    const todos = await Todo.find({});
+    const todos = await getAllTodos();
     return res.status(200).json({ todos });
   }
 }
+
+export const getAllTodos = async () => {
+  const todos = await Todo.find({});
+  return todos;
+};

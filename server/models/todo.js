@@ -32,7 +32,7 @@ const todoschema = new Schema({
   deadline: {
     type: Date,
     required: true,
-    default: (Date.now() + 10000000).toLocaleString(),
+    default: new Date(Date.now() + 10000000),
   },
   selected_time: {
     type: String,

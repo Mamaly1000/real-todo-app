@@ -11,7 +11,7 @@ import infoIcon from "./../assets/icons/todo-detail.svg";
 import clickIcon from "../assets/icons/clock.svg";
 import moment from "moment/moment";
 import Link from "next/link";
-const Todo = ({ todo, setTodos }) => {
+const TodoComponent = ({ todo, setTodos }) => {
   const [clicked, setCicked] = useState(false);
   const deleteToDo = (id) => {
     axios
@@ -28,7 +28,7 @@ const Todo = ({ todo, setTodos }) => {
     <div className="min-w-[90%] min-h-[50px] md:min-w-[330px] max-w-[330px] rounded-lg flex flex-col items-start overflow-hidden capitalize font-bold transition-all  ">
       <div
         className="w-full min-h-[30px] rounded-t-lg p-2 text-[.9rem] font-semibold  flex justify-between items-center "
-        style={{ background: priorities[todo.priority].color }}
+        style={{ background: priorities[todo.priority - 1].color }}
       >
         <div className="flex justify-start items-center gap-2">
           <Image
@@ -49,12 +49,12 @@ const Todo = ({ todo, setTodos }) => {
         <div className=" w-full py-2 flex justify-start items-center gap-2 border-b-[1px] border-modal_copyright">
           <div
             className="w-[20px] h-[20px] rounded-full flex justify-center items-center"
-            style={{ background: priorities[todo.priority].color }}
+            style={{ background: priorities[todo.priority - 1].color }}
           >
             <div className="w-[17px] h-[17px] rounded-full flex justify-center items-center bg-modal_container">
               <div
                 className="w-[5px] h-[5px] rounded-full flex justify-center items-center"
-                style={{ background: priorities[todo.priority].color }}
+                style={{ background: priorities[todo.priority - 1].color }}
               ></div>
             </div>
           </div>
@@ -151,4 +151,4 @@ const Todo = ({ todo, setTodos }) => {
   );
 };
 
-export default Todo;
+export default TodoComponent;

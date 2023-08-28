@@ -1,29 +1,16 @@
 import addIcon from "./../../assets/icons/add.svg";
 import Image from "next/image";
-import Todo from "../../components/Todo";
-import useSWR from "swr";
+import TodoComponent from "../../components/Todo";
 import axios from "axios";
 import Loading from "./../../components/Loading";
 import { useState } from "react";
 import TodoForm from "../../components/TodoForm";
 import bg_pic from "./../../assets/bg-pic.jpg";
-const index = () => {
+import { getAllTodos } from "../api/todos";
+import dbConnect from "../../server/utils/dbConnect";
+const index = ({ todosData }) => {
   const [searchedText, setSearchedText] = useState("");
-  const [todos, setTodos] = useState([]);
-  const { error, isLoading } = useSWR(
-    "fetch-todos",
-    () => {
-      return axios.get("/api/todos");
-    },
-    {
-      onError: () => {
-        throw new Error("could'nt fetch todos");
-      },
-      onSuccess: (data) => {
-        setTodos(data.data.todos);
-      },
-    }
-  );
+  const [todos, setTodos] = useState(todosData);
   const [displayPopUp, setDisplayPopUp] = useState(false);
   const addTodo = async (e, data) => {
     e.preventDefault();
@@ -47,7 +34,7 @@ const index = () => {
       (todo.category + "").toLowerCase().includes(searchedText.toLowerCase())
     );
   });
-  if (isLoading || error) {
+  if (!todosData) {
     return <Loading />;
   }
   return (
@@ -75,9 +62,11 @@ const index = () => {
           <Image src={addIcon} alt="add todo" width={25} height={25} />{" "}
         </button>
       </div>
-      <div className="w-full flex items-center justify-center gap-5 flex-col ">
+      <div className="w-full flex items-start justify-center flex-wrap gap-5  ">
         {searchedData.map((todo) => {
-          return <Todo setTodos={setTodos} todo={todo} key={todo._id} />;
+          return (
+            <TodoComponent setTodos={setTodos} todo={todo} key={todo._id} />
+          );
         })}
       </div>
       {displayPopUp && (
@@ -92,3 +81,13 @@ const index = () => {
 };
 
 export default index;
+
+export const getServerSideProps = async () => {
+  await dbConnect();
+  const todos = await getAllTodos();
+  return {
+    props: {
+      todosData: JSON.parse(JSON.stringify(todos)),
+    },
+  };
+};
