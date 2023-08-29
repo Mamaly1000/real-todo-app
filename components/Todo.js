@@ -24,6 +24,14 @@ const TodoComponent = ({ todo, setTodos }) => {
         throw new Error({ title: err });
       });
   };
+  const completeHandler = (id) => {
+    axios
+      .put(`/api/todos/completed/${id}`)
+      .then((res) => {
+        setTodos(res.data.todos);
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <div className="min-w-[90%] min-h-[50px] md:min-w-[330px] max-w-[330px] rounded-lg flex flex-col items-start overflow-hidden capitalize font-bold transition-all  ">
       <div
@@ -47,17 +55,25 @@ const TodoComponent = ({ todo, setTodos }) => {
       </div>
       <div className="w-full min-w-[150px] p-2 flex flex-wrap items-start justify-start gap-2 bg-modal_container">
         <div className=" w-full py-2 flex justify-start items-center gap-2 border-b-[1px] border-modal_copyright">
-          <div
-            className="w-[20px] h-[20px] rounded-full flex justify-center items-center"
-            style={{ background: priorities[todo.priority - 1].color }}
-          >
-            <div className="w-[17px] h-[17px] rounded-full flex justify-center items-center bg-modal_container">
-              <div
-                className="w-[5px] h-[5px] rounded-full flex justify-center items-center"
-                style={{ background: priorities[todo.priority - 1].color }}
-              ></div>
+          {todo.completed ? (
+            <div
+              className=" cursor-pointer w-[20px] h-[20px] rounded-full flex justify-center items-center"
+              style={{ background: priorities[todo.priority - 1].color }}
+              onClick={() => completeHandler(todo._id)}
+            >
+              <div className="w-[17px] h-[17px] rounded-full flex justify-center items-center bg-modal_container">
+                <div
+                  className="w-[5px] h-[5px] rounded-full flex justify-center items-center"
+                  style={{ background: priorities[todo.priority - 1].color }}
+                ></div>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div
+              onClick={() => completeHandler(todo._id)}
+              className="w-[20px] h-[20px] border-[1px] border-btn_color rounded-full flex justify-center items-center cursor-pointer"
+            ></div>
+          )}
           <span
             onClick={() => {
               setCicked((prev) => !prev);
@@ -66,6 +82,11 @@ const TodoComponent = ({ todo, setTodos }) => {
           >
             {todo.title}
           </span>
+          {todo.completed && (
+            <span className="bg-green-900 capitalize px-2 py-1 rounded-lg">
+              completed
+            </span>
+          )}
         </div>
         <div className="w-full py-2 flex gap-2 items-center justify-between ">
           <span
@@ -100,7 +121,6 @@ const TodoComponent = ({ todo, setTodos }) => {
             {moment(todo.deadline).format("dddd, DD MMM YYYY")}
           </span>
         </div>
-
         {clicked && (
           <div className="min-w-full border-t-[1px] pt-2 border-modal_copyright min-h-[200px] max-h-fit flex flex-col gap-2 justify-center items-center">
             <span className="w-full text-start">title :</span>
@@ -135,7 +155,10 @@ const TodoComponent = ({ todo, setTodos }) => {
                 />
                 delete
               </button>
-              <button className="w-fit h-fit rounded-lg  border-[1px] border-btn_color hover:border-white transition-all bg-btn_color capitalize flex items-center gap-2 px-2 py-1">
+              <button
+                onClick={() => completeHandler(todo._id)}
+                className="w-fit h-fit rounded-lg  border-[1px] border-btn_color hover:border-white transition-all bg-btn_color capitalize flex items-center gap-2 px-2 py-1"
+              >
                 <Image src={tickIcon} alt="tick icon" />
                 done!
               </button>

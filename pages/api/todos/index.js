@@ -2,8 +2,8 @@ import dbConnect from "../../../server/utils/dbConnect";
 import Todo from "./../../../server/models/todo";
 
 export default async function TodosHandler(req, res) {
-  const { method, body } = req;
   await dbConnect();
+  const { method, body } = req;
   if (method === "POST") {
     await Todo.create({
       title: body.title,

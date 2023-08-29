@@ -62,12 +62,35 @@ const index = ({ todosData }) => {
           <Image src={addIcon} alt="add todo" width={25} height={25} />{" "}
         </button>
       </div>
+      <h3 className="px-3 py-2 rounded-lg capitalize bg-modal_container text-modal_header font-semibold">
+        completed todos
+      </h3>
       <div className="w-full flex items-start justify-center flex-wrap gap-5  ">
-        {searchedData.map((todo) => {
-          return (
-            <TodoComponent setTodos={setTodos} todo={todo} key={todo._id} />
-          );
-        })}
+        {searchedData
+          .sort((a, b) => {
+            return a.priority < b.priority ? -1 : 1;
+          })
+          .filter((todo) => todo.completed === true)
+          .map((todo) => {
+            return (
+              <TodoComponent setTodos={setTodos} todo={todo} key={todo._id} />
+            );
+          })}
+      </div>{" "}
+      <h3 className="px-3 py-2 rounded-lg capitalize bg-modal_container text-modal_header font-semibold">
+        unCompleted todos
+      </h3>
+      <div className="w-full flex items-start justify-center flex-wrap gap-5  ">
+        {searchedData
+          .sort((a, b) => {
+            return a.priority < b.priority ? -1 : 1;
+          })
+          .filter((todo) => todo.completed === false)
+          .map((todo) => {
+            return (
+              <TodoComponent setTodos={setTodos} todo={todo} key={todo._id} />
+            );
+          })}
       </div>
       {displayPopUp && (
         <TodoForm
