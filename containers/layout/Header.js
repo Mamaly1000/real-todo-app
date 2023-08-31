@@ -2,8 +2,10 @@ import React from "react";
 import { priorities } from "../../components/TodoForm";
 import addIcon from "./../../assets/icons/add.svg";
 import Image from "next/image";
-
+import Link from "next/link";
+import { useSession, signIn, signOut } from "next-auth/react";
 const Header = ({ setDisplayPopUp, searchedText, setSearchedText }) => {
+  const { data: session } = useSession();
   return (
     <header className="z-10 p-2 w-full flex-wrap  fixed top-0 start-0 flex bg-modal_container items-center gap-5 justify-center sm:justify-between ">
       <div className="order-1 cursor-default w-fit h-fit px-3 py-2 rounded-lg bg-btn_color text-[1.3rem] uppercase ">
@@ -40,6 +42,29 @@ const Header = ({ setDisplayPopUp, searchedText, setSearchedText }) => {
         onChange={(e) => setSearchedText(e.target.value)}
         className="order-3 md:order-2 flex transition-all min-w-full  lg:min-w-[500px] md:min-w-[300px] h-[50px] ps-2 rounded-lg border-[1px] outline-none focus:border-btn_color"
       />
+      {session && session.user ? (
+        <button
+          onClick={() => signOut()}
+          className="order-2 md:order-3 w-fit flex gap-2 items-center justify-between h-fit rounded-lg bg-btn_color px-2 py-1 capitalize    transition-all border-[1px] border-transparent hover:border-white"
+        >
+          LogOut
+        </button>
+      ) : (
+        <button
+          onClick={() => signIn()}
+          className="order-2 md:order-3 w-fit flex gap-2 items-center justify-between h-fit rounded-lg bg-btn_color px-2 py-1 capitalize    transition-all border-[1px] border-transparent hover:border-white"
+        >
+          Login
+        </button>
+      )}
+      {/* <button className="order-2 md:order-3 w-fit flex gap-2 items-center justify-between h-fit rounded-lg bg-modal_container px-2 py-1 capitalize    transition-all border-[1px] border-transparent hover:border-white">
+        register
+      </button>{" "} */}
+      <Link legacyBehavior href="/profile">
+        <a className="order-2 md:order-3 w-fit flex gap-2 items-center justify-between h-fit rounded-lg bg-modal_container px-2 py-1 capitalize    transition-all border-[1px] border-transparent hover:border-white">
+          profile
+        </a>
+      </Link>
       <button
         onClick={() => setDisplayPopUp(true)}
         className="order-2 md:order-3 w-fit flex gap-2 items-center justify-between h-fit rounded-lg bg-btn_color px-2 py-1 capitalize    transition-all border-[1px] border-transparent hover:border-white"
