@@ -13,18 +13,21 @@ export const authOptions = {
   ],
   adapter: MongoDBAdapter(clientPromise),
   session: {
-    strat,
+    strategy: "jwt",
+  },
+  jwt: {
+    secret: process.env.SECRET_JWT,
   },
   callbacks: {
     async jwt({ token, account }) {
-      // Persist the OAuth access_token to the token right after signin
       if (account) {
         token.accessToken = account.access_token;
+        token.id = profile.id;
       }
       return token;
     },
-    async session({ session, token, user }) {
-      // Send properties to the client, like an access_token from a provider.
+    async session({ session, token }) {
+      session.user.id = token.id;
       session.accessToken = token.accessToken;
       return session;
     },

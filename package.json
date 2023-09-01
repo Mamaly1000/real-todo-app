@@ -12,6 +12,7 @@
     "@auth/mongodb-adapter": "^1.0.0",
     "axios": "^1.4.0",
     "framer-motion": "^10.16.1",
+    "jsonwebtoken": "^9.0.2",
     "moment": "^2.29.4",
     "mongodb": "4.1",
     "mongoose": "^7.4.4",

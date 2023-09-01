@@ -9,7 +9,8 @@ import dbConnect from "../server/utils/dbConnect";
 import { tagMotions } from "../motions/modalMotion";
 import Layout from "../containers/layout/Layout";
 import { getSession } from "next-auth/react";
-const index = ({ todosData }) => {
+const index = ({ todosData, sessionData }) => {
+  console.log(sessionData);
   const [searchedText, setSearchedText] = useState("");
   const [todos, setTodos] = useState(todosData);
   const searchedData = todos.filter((todo) => {
