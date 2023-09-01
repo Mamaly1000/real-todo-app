@@ -8,33 +8,35 @@ const Header = ({ setDisplayPopUp, searchedText, setSearchedText }) => {
   const { data: session } = useSession();
   return (
     <header className="z-10 p-2 w-full flex-wrap  fixed top-0 start-0 flex bg-modal_container items-center gap-5 justify-center sm:justify-between ">
-      <div className="order-1 cursor-default w-fit h-fit px-3 py-2 rounded-lg bg-btn_color text-[1.3rem] uppercase ">
-        task{" "}
-        <span
-          style={{ background: priorities[0].color }}
-          className="rounded-s-lg px-1"
-        >
-          M
-        </span>
-        <span style={{ background: priorities[1].color }} className="px-1">
-          A
-        </span>
-        <span style={{ background: priorities[2].color }} className="px-1">
-          S
-        </span>
-        <span style={{ background: priorities[3].color }} className="px-1">
-          T
-        </span>
-        <span style={{ background: priorities[4].color }} className="px-1">
-          E
-        </span>
-        <span
-          style={{ background: priorities[2].color }}
-          className="rounded-e-lg px-1"
-        >
-          R
-        </span>
-      </div>{" "}
+      <Link legacyBehavior href="/">
+        <a className="cursor-pointer order-1   w-fit h-fit px-3 py-2 rounded-lg bg-btn_color text-[1.3rem] uppercase ">
+          task{" "}
+          <span
+            style={{ background: priorities[0].color }}
+            className="rounded-s-lg px-1"
+          >
+            M
+          </span>
+          <span style={{ background: priorities[1].color }} className="px-1">
+            A
+          </span>
+          <span style={{ background: priorities[2].color }} className="px-1">
+            S
+          </span>
+          <span style={{ background: priorities[3].color }} className="px-1">
+            T
+          </span>
+          <span style={{ background: priorities[4].color }} className="px-1">
+            E
+          </span>
+          <span
+            style={{ background: priorities[2].color }}
+            className="rounded-e-lg px-1"
+          >
+            R
+          </span>
+        </a>
+      </Link>
       <input
         type="text"
         value={searchedText}

@@ -1,9 +1,16 @@
 import React from "react";
 import Layout from "../containers/layout/Layout";
 import { useSession } from "next-auth/react";
+import Loading from "../components/Loading";
 const profile = () => {
-  const { data: session } = useSession();
-
+  const { data: session, status } = useSession();
+  if (status === "loading") {
+    return (
+      <Layout>
+        <Loading />
+      </Layout>
+    );
+  }
   return (
     <Layout>
       {session && session.user ? (

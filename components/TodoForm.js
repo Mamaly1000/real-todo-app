@@ -49,7 +49,7 @@ const TodoForm = ({ title, onAdd, setShow }) => {
   });
   return (
     <AnimatePresence>
-      <div className="w-full h-full fixed overflow-auto start-0 top-0 flex justify-center items-center  z-10  ">
+      <motion.div className="w-full h-full fixed overflow-auto start-0 top-0 flex justify-center items-center  z-10  ">
         <motion.div
           variants={modalMotion}
           initial="hidden"
@@ -231,13 +231,13 @@ const TodoForm = ({ title, onAdd, setShow }) => {
             </button>
             <button
               onClick={() => setShow(false)}
-              className="w-fit h-fit px-3 py-2 rounded-lg hover:scale-110 bg-transparent border-[1px] border-transparent hover:border-btn_color text-modal_header hover:text-btn_color  transition-all"
+              className="border-white  capitalize w-fit h-fit px-3 py-2 rounded-lg hover:scale-110 bg-transparent border-[1px] border-transparent hover:border-btn_color text-modal_header hover:text-btn_color  transition-all"
             >
               cancel
             </button>
           </div>
         </motion.div>
-      </div>
+      </motion.div>
     </AnimatePresence>
   );
 };
