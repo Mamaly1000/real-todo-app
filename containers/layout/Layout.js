@@ -3,6 +3,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import TodoForm from "../../components/TodoForm";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const Layout = ({
   setTodos,
@@ -19,14 +20,14 @@ const Layout = ({
       .then((res) => {
         setTodos(res.data.todos);
         setDisplayPopUp(false);
-        alert(res.data.message);
+        toast.success(res.data.message);
       })
       .catch((err) => {
         console.log("failed to add todo !" + err);
       });
   };
   return (
-    <div className="min-h-screen relative   pt-[320px] sm:pt-[150px] md:pt-[50px] flex justify-between items-start flex-col gap-10 p-0 overflow-hidden  ">
+    <div className="min-h-screen  relative pb-0  pt-[320px] sm:pt-[150px] md:pt-[50px] flex justify-between items-start flex-col gap-10 p-0 overflow-hidden  ">
       <Header
         setDisplayPopUp={setDisplayPopUp}
         searchedText={searchedText}
@@ -41,6 +42,18 @@ const Layout = ({
           onAdd={addTodo}
         />
       )}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </div>
   );
 };

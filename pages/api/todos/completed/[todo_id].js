@@ -1,8 +1,8 @@
 import dbConnect from "../../../../server/utils/dbConnect";
-import Todo from "../../../../server/models/todo"; 
+import Todo from "../../../../server/models/todo";
 
 export default async function TodosCompleteHandler(req, res) {
-  await dbConnect(); 
+  await dbConnect();
   const {
     method,
     query: { todo_id },
@@ -15,6 +15,9 @@ export default async function TodosCompleteHandler(req, res) {
     const todos = await Todo.find({ userID: body.userID });
     return res.status(200).json({
       todos,
+      message: `${todo.title} is ${
+        todo.completed ? "completed" : "uncompleted"
+      }`,
     });
   }
 }

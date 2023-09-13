@@ -15,24 +15,26 @@ import {
   tickIcon,
   todo_detailIcon,
 } from "../assets/icons";
+import { toast } from "react-toastify";
 const TodoComponent = ({ todo, setTodos }) => {
   const [clicked, setCicked] = useState(false);
-  const deleteToDo = (id) => {
-    axios
+  const deleteToDo = async (id) => {
+    await axios
       .delete(`/api/todos/${id}`)
       .then((res) => {
         setTodos(res.data.todos);
-        alert(res.data.message);
+        toast.success(res.data.message);
       })
       .catch((err) => {
         throw new Error({ title: err });
       });
   };
-  const completeHandler = (id) => {
-    axios
+  const completeHandler = async (id) => {
+    await axios
       .put(`/api/todos/completed/${id}`, { userID: todo.userID })
       .then((res) => {
         setTodos(res.data.todos);
+        toast.success(res.data.message);
       })
       .catch((err) => console.log(err));
   };
@@ -74,7 +76,12 @@ const TodoComponent = ({ todo, setTodos }) => {
               <div
                 className=" cursor-pointer w-[20px] h-[20px] rounded-full flex justify-center items-center"
                 style={{ background: priorities[todo.priority - 1].color }}
-                onClick={() => completeHandler(todo._id)}
+                onClick={() =>
+                  toast.promise(completeHandler(todo._id), {
+                    error: `failed to fetch data`,
+                    pending: `fetching data`,
+                  })
+                }
               >
                 <div className="w-[17px] h-[17px] rounded-full flex justify-center items-center bg-modal_container">
                   <div
@@ -85,7 +92,12 @@ const TodoComponent = ({ todo, setTodos }) => {
               </div>
             ) : (
               <div
-                onClick={() => completeHandler(todo._id)}
+                onClick={() =>
+                  toast.promise(completeHandler(todo._id), {
+                    error: `failed to fetch data`,
+                    pending: `fetching data`,
+                  })
+                }
                 className="w-[20px] h-[20px] border-[1px] border-btn_color rounded-full flex justify-center items-center cursor-pointer"
               ></div>
             )}
@@ -159,7 +171,12 @@ const TodoComponent = ({ todo, setTodos }) => {
                   </a>
                 </Link>
                 <button
-                  onClick={() => deleteToDo(todo._id)}
+                  onClick={() =>
+                    toast.promise(deleteToDo(todo._id), {
+                      error: `could not delete ${todo.title} todo`,
+                      pending: `deleting ${todo.title} todo`,
+                    })
+                  }
                   className="flex items-center gap-2   w-fit h-fit px-2 py-1 rounded-lg border-[1px] border-white hover:border-btn_color transition-all capitalize bg-red-700"
                 >
                   <Image
@@ -171,7 +188,12 @@ const TodoComponent = ({ todo, setTodos }) => {
                   delete
                 </button>
                 <button
-                  onClick={() => completeHandler(todo._id)}
+                  onClick={() =>
+                    toast.promise(completeHandler(todo._id), {
+                      error: `failed to fetch data`,
+                      pending: `fetching data`,
+                    })
+                  }
                   className="w-fit h-fit rounded-lg  border-[1px] border-btn_color hover:border-white transition-all bg-btn_color capitalize flex items-center gap-2 px-2 py-1"
                 >
                   <Image src={tickIcon} alt="tick icon" />

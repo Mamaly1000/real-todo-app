@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { getSingleTodo } from "../api/todos/[todo_id]";
 import Image from "next/image";
-import { useRouter } from "next/router"; 
+import { useRouter } from "next/router";
 import { categories, priorities } from "../../components/TodoForm";
 import moment from "moment";
 import axios from "axios";
@@ -19,6 +19,7 @@ import {
   editIcon,
   reloadIcon,
 } from "../../assets/icons";
+import { toast } from "react-toastify";
 const SingleTodoPage = ({ todo }) => {
   const [selectedEdit, setSelectedEdit] = useState("");
   const router = useRouter();
@@ -64,22 +65,23 @@ const SingleTodoPage = ({ todo }) => {
           : formData.selected_time + " AM",
     },
   ];
-  const deleteToDo = (id) => {
-    axios
+  const deleteToDo = async (id) => {
+    await axios
       .delete(`/api/todos/${id}`)
-      .then(() => {
+      .then((res) => {
+        toast.success(res.data.message);
         router.push("/");
       })
       .catch((err) => {
+        toast.error("failed to delete todo");
         throw new Error({ title: err });
       });
   };
   const editTodo = async (id) => {
     await axios
       .put(`/api/todos/${id}`, formData)
-      .then((res) => {
+      .then(() => {
         setSelectedEdit("");
-        alert(res.data.message);
       })
       .catch((err) => console.log(err));
   };
@@ -208,7 +210,20 @@ const SingleTodoPage = ({ todo }) => {
         <AnimatePresence>
           {selectedEdit === "title" && (
             <ModalComponent
-              onsubmit={() => editTodo(todo._id)}
+              onsubmit={() =>
+                toast.promise(
+                  toast.promise(editTodo(todo._id), {
+                    error: `failed to edit ${todo.title} todo`,
+                    pending: `editing ${todo.title} todo`,
+                    success: `${todo.title} todo edited successfuly`,
+                  }),
+                  {
+                    error: `failed to edit ${todo.title} todo`,
+                    pending: `editing ${todo.title} todo`,
+                    success: `${todo.title} todo edited successfuly`,
+                  }
+                )
+              }
               setValue={setSelectedEdit}
               onCancel={() => {
                 setFormData({
@@ -261,7 +276,20 @@ const SingleTodoPage = ({ todo }) => {
           {" "}
           {selectedEdit === "deadline" && (
             <ModalComponent
-              onsubmit={() => editTodo(todo._id)}
+              onsubmit={() =>
+                toast.promise(
+                  toast.promise(editTodo(todo._id), {
+                    error: `failed to edit ${todo.title} todo`,
+                    pending: `editing ${todo.title} todo`,
+                    success: `${todo.title} todo edited successfuly`,
+                  }),
+                  {
+                    error: `failed to edit ${todo.title} todo`,
+                    pending: `editing ${todo.title} todo`,
+                    success: `${todo.title} todo edited successfuly`,
+                  }
+                )
+              }
               setValue={setSelectedEdit}
               onCancel={() => {
                 setFormData({
@@ -303,7 +331,13 @@ const SingleTodoPage = ({ todo }) => {
           {" "}
           {selectedEdit === "completed" && (
             <ModalComponent
-              onsubmit={() => editTodo(todo._id)}
+              onsubmit={() =>
+                toast.promise(editTodo(todo._id), {
+                  error: `failed to edit ${todo.title} todo`,
+                  pending: `editing ${todo.title} todo`,
+                  success: `${todo.title} todo edited successfuly`,
+                })
+              }
               setValue={setSelectedEdit}
               onCancel={() => {
                 setFormData({
@@ -349,7 +383,13 @@ const SingleTodoPage = ({ todo }) => {
         <AnimatePresence>
           {selectedEdit === "category" && (
             <ModalComponent
-              onsubmit={() => editTodo(todo._id)}
+              onsubmit={() =>
+                toast.promise(editTodo(todo._id), {
+                  error: `failed to edit ${todo.title} todo`,
+                  pending: `editing ${todo.title} todo`,
+                  success: `${todo.title} todo edited successfuly`,
+                })
+              }
               setValue={setSelectedEdit}
               onCancel={() => {
                 setFormData({
@@ -395,7 +435,13 @@ const SingleTodoPage = ({ todo }) => {
         <AnimatePresence>
           {selectedEdit === "priority" && (
             <ModalComponent
-              onsubmit={() => editTodo(todo._id)}
+              onsubmit={() =>
+                toast.promise(editTodo(todo._id), {
+                  error: `failed to edit ${todo.title} todo`,
+                  pending: `editing ${todo.title} todo`,
+                  success: `${todo.title} todo edited successfuly`,
+                })
+              }
               setValue={setSelectedEdit}
               onCancel={() => {
                 setFormData({
@@ -441,7 +487,13 @@ const SingleTodoPage = ({ todo }) => {
         <AnimatePresence>
           {selectedEdit === "selected time" && (
             <ModalComponent
-              onsubmit={() => editTodo(todo._id)}
+              onsubmit={() =>
+                toast.promise(editTodo(todo._id), {
+                  error: `failed to edit ${todo.title} todo`,
+                  pending: `editing ${todo.title} todo`,
+                  success: `${todo.title} todo edited successfuly`,
+                })
+              }
               setValue={setSelectedEdit}
               onCancel={() => {
                 setFormData({

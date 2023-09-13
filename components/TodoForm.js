@@ -4,6 +4,7 @@ import TimePicker from "react-time-picker";
 import { AnimatePresence, motion } from "framer-motion";
 import { modalContentMotion, modalMotion } from "../motions/modalMotion";
 import { useSession } from "next-auth/react";
+import { toast } from "react-toastify";
 export const priorities = [
   {
     p: 1,
@@ -218,7 +219,10 @@ const TodoForm = ({ title, onAdd, setShow }) => {
           <div className="capitalize text-[1rem] w-full h-fit flex  md:flex-row gap-4 justify-center items-center ">
             <button
               onClick={(e) => {
-                onAdd(e, formData);
+                toast.promise(onAdd(e, formData), {
+                  error: "failed to add todo",
+                  pending: "adding todo",
+                });
               }}
               className="min-w-[100px] w-fit h-fit px-3 py-2 rounded-lg bg-btn_color text-modal_header border-[1px] border-transparent hover:border-white disabled:opacity-50 transition-all hover:scale-110"
               disabled={

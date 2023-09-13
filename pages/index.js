@@ -9,6 +9,7 @@ import dbConnect from "../server/utils/dbConnect";
 import { tagMotions } from "../motions/modalMotion";
 import Layout from "../containers/layout/Layout";
 import { getSession } from "next-auth/react";
+import { toast } from "react-toastify";
 const index = ({ todosData }) => {
   const [displayPopUp, setDisplayPopUp] = useState(false);
   const [searchedText, setSearchedText] = useState("");
@@ -23,6 +24,7 @@ const index = ({ todosData }) => {
     );
   });
   if (!todosData) {
+    toast.error("failed to fetch data or unauthenticated !");
     return (
       <Layout>
         <Loading />
@@ -37,7 +39,7 @@ const index = ({ todosData }) => {
       displayPopUp={displayPopUp}
       setTodos={setTodos}
     >
-      <div className="relative w-full p-2 md:p-10 flex flex-col justify-center items-center gap-10 ">
+      <div className="relative w-full min-h-screen p-2 md:p-10 flex flex-col justify-center items-center gap-10 ">
         <div className="min-w-full min-h-[300px] md:min-h-[500px] flex justify-center items-end max-h-[500px] overflow-hidden  fixed top-0 start-0 -z-10">
           <Image
             src={bg_pic}
@@ -127,6 +129,7 @@ export const getServerSideProps = async (ctx) => {
   const session = await getSession(ctx);
   const todos = await Todo.find({ userID: session.user.id });
   if (!session) {
+    toast.error("you did not authenticated !");
     return {
       redirect: {
         destination: "/api/auth/signin?callbackUrl=http://localhost:3000/",
@@ -134,6 +137,9 @@ export const getServerSideProps = async (ctx) => {
       },
     };
   }
+  toast.success(`wellcome to your app ${session.user.name}`, {
+    icon: session.user.image,
+  });
   return {
     props: {
       todosData: JSON.parse(JSON.stringify(todos)),
