@@ -11,7 +11,7 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="w-full flex justify-between items-center min-h-[100px]  absolute bottom-0 start-0 flex-wrap   gap-5 bg-modal_container p-2">
+    <footer className="w-full flex justify-between items-center min-h-[100px]  relative bottom-0 start-0 flex-wrap   gap-5 bg-modal_container p-2">
       <div className="w-fit flex [&>a>img]:max-w-[50px] flex-wrap justify-start items-center text-[1.3rem] capitalize font-bold text-modal_header gap-5 ">
         <Link
           legacyBehavior

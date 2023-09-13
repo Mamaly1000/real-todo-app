@@ -26,7 +26,7 @@ const Layout = ({
       });
   };
   return (
-    <div className="min-h-[1000px] relative pb-[150px] pt-[200px] sm:pt-[150px] md:pt-[50px] flex justify-start items-start flex-col gap-10 p-0 overflow-hidden  ">
+    <div className="min-h-screen relative   pt-[320px] sm:pt-[150px] md:pt-[50px] flex justify-between items-start flex-col gap-10 p-0 overflow-hidden  ">
       <Header
         setDisplayPopUp={setDisplayPopUp}
         searchedText={searchedText}
