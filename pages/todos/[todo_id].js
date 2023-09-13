@@ -1,13 +1,9 @@
 import React, { useState } from "react";
 import { getSingleTodo } from "../api/todos/[todo_id]";
-import closeIcon from "./../../assets/icons/close.svg";
-import reloadIcon from "./../../assets/icons/reload.svg";
 import Image from "next/image";
-import { useRouter } from "next/router";
-import editIcon from "./../../assets/icons/edit.svg";
+import { useRouter } from "next/router"; 
 import { categories, priorities } from "../../components/TodoForm";
 import moment from "moment";
-import deleteIcon from "./../../assets/icons/reddelete.svg";
 import axios from "axios";
 import ModalComponent from "../../components/ModalComponent";
 import Calendar from "react-calendar";
@@ -17,6 +13,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import { signIn, useSession } from "next-auth/react";
 import Layout from "../../containers/layout/Layout";
 import Loading from "../../components/Loading";
+import {
+  closeIcon,
+  deleteIcon,
+  editIcon,
+  reloadIcon,
+} from "../../assets/icons";
 const SingleTodoPage = ({ todo }) => {
   const [selectedEdit, setSelectedEdit] = useState("");
   const router = useRouter();

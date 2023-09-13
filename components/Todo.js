@@ -1,18 +1,20 @@
 import Image from "next/image";
 import { useState } from "react";
-import tickIcon from "./../assets/icons/tick.svg";
-import editIcon from "./../assets/icons/edit.svg";
-import deleteIcon from "./../assets/icons/delete.svg";
 import axios from "axios";
 import Error from "next/error";
 import { priorities } from "./TodoForm";
-import priorityIcon from "./../assets/icons/priority.svg";
-import infoIcon from "./../assets/icons/todo-detail.svg";
-import clickIcon from "../assets/icons/clock.svg";
 import moment from "moment/moment";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { todoCardMotion } from "../motions/modalMotion";
+import {
+  clockIcon,
+  deleteIcon,
+  editIcon,
+  priorityIcon,
+  tickIcon,
+  todo_detailIcon,
+} from "../assets/icons";
 const TodoComponent = ({ todo, setTodos }) => {
   const [clicked, setCicked] = useState(false);
   const deleteToDo = (id) => {
@@ -59,7 +61,11 @@ const TodoComponent = ({ todo, setTodos }) => {
             onClick={() => setCicked((prev) => !prev)}
             className="w-fit h-fit rounded-full p-2 bg-btn_color"
           >
-            <Image alt="info" src={infoIcon} className="w-[20px] h-[20px] " />
+            <Image
+              alt="info"
+              src={todo_detailIcon}
+              className="w-[20px] h-[20px] "
+            />
           </button>
         </div>
         <div className="w-full min-w-[150px] p-2 flex flex-wrap items-start justify-start gap-2 bg-modal_container">
@@ -106,7 +112,7 @@ const TodoComponent = ({ todo, setTodos }) => {
             >
               <Image
                 className="w-[20px] h-[20px]"
-                src={clickIcon}
+                src={clockIcon}
                 alt="clock icon"
               />
               {+(todo.selected_time + "").split(":")[0] > 12

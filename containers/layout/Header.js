@@ -1,10 +1,10 @@
 import React from "react";
-import { priorities } from "../../components/TodoForm";
-import addIcon from "./../../assets/icons/add.svg";
+import { priorities } from "../../components/TodoForm"; 
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { addIcon } from "../../assets/icons";
 const Header = ({ searchedText, setSearchedText }) => {
   const { data: session, status } = useSession();
   const location = useRouter();
