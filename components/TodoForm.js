@@ -3,6 +3,7 @@ import Calendar from "react-calendar";
 import TimePicker from "react-time-picker";
 import { AnimatePresence, motion } from "framer-motion";
 import { modalContentMotion, modalMotion } from "../motions/modalMotion";
+import { useSession } from "next-auth/react";
 export const priorities = [
   {
     p: 1,
@@ -39,6 +40,7 @@ export const categories = [
   "home",
 ];
 const TodoForm = ({ title, onAdd, setShow }) => {
+  const { data: session } = useSession();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -46,10 +48,11 @@ const TodoForm = ({ title, onAdd, setShow }) => {
     priority: 0,
     deadLine: "",
     selected_time: "",
+    userID: session.user.id,
   });
   return (
     <AnimatePresence>
-      <motion.div className="w-full h-full fixed overflow-auto start-0 top-0 flex justify-center items-center  z-10  ">
+      <motion.div className="w-full h-full fixed overflow-auto start-0 top-0 flex justify-center items-center  z-50  ">
         <motion.div
           variants={modalMotion}
           initial="hidden"

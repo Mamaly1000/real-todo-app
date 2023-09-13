@@ -1,10 +1,8 @@
 import React from "react";
 import { priorities } from "../../components/TodoForm";
-import addIcon from "./../../assets/icons/add.svg";
-import Image from "next/image";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
-const Header = ({ setDisplayPopUp, searchedText, setSearchedText }) => {
+const Header = ({ searchedText, setSearchedText }) => {
   const { data: session } = useSession();
   return (
     <header className="z-10 p-2 w-full flex-wrap  fixed top-0 start-0 flex bg-modal_container items-center gap-5 justify-center sm:justify-between ">
@@ -67,13 +65,6 @@ const Header = ({ setDisplayPopUp, searchedText, setSearchedText }) => {
           profile
         </a>
       </Link>
-      <button
-        onClick={() => setDisplayPopUp(true)}
-        className="order-2 md:order-3 w-fit flex gap-2 items-center justify-between h-fit rounded-lg bg-btn_color px-2 py-1 capitalize    transition-all border-[1px] border-transparent hover:border-white"
-      >
-        create new todo{" "}
-        <Image src={addIcon} alt="add todo" width={25} height={25} />{" "}
-      </button>
     </header>
   );
 };

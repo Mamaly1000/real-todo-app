@@ -29,6 +29,7 @@ const SingleTodoPage = ({ todo }) => {
     selected_time: todo.selected_time,
     created_at: todo.created_at,
     completed: todo.completed,
+    userID: todo.userID,
   });
   const details = [
     {
@@ -65,7 +66,7 @@ const SingleTodoPage = ({ todo }) => {
     axios
       .delete(`/api/todos/${id}`)
       .then(() => {
-        router.push("/todos");
+        router.push("/");
       })
       .catch((err) => {
         throw new Error({ title: err });
@@ -94,7 +95,7 @@ const SingleTodoPage = ({ todo }) => {
     );
   }
   return (
-    <Layout >
+    <Layout>
       <div className="overflow-hidden relative w-full flex justify-center items-center p-2 md:p-10 gap-5 flex-col">
         <motion.div
           initial={{

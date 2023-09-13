@@ -4,8 +4,14 @@ import Footer from "./Footer";
 import TodoForm from "../../components/TodoForm";
 import axios from "axios";
 
-const Layout = ({ children, searchedText, setSearchedText }) => {
-  const [displayPopUp, setDisplayPopUp] = useState(false);
+const Layout = ({
+  setTodos,
+  displayPopUp,
+  setDisplayPopUp,
+  children,
+  searchedText,
+  setSearchedText,
+}) => {
   const addTodo = async (e, data) => {
     e.preventDefault();
     await axios

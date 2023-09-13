@@ -28,7 +28,7 @@ const TodoComponent = ({ todo, setTodos }) => {
   };
   const completeHandler = (id) => {
     axios
-      .put(`/api/todos/completed/${id}`)
+      .put(`/api/todos/completed/${id}`, { userID: todo.userID })
       .then((res) => {
         setTodos(res.data.todos);
       })

@@ -1,6 +1,7 @@
 import Todo from "./../../../server/models/todo";
 import dbConnect from "../../../server/utils/dbConnect";
 import moment from "moment";
+import { getSession } from "next-auth/react";
 export default async function SingleToDoHandler(req, res) {
   await dbConnect();
   const {
@@ -8,9 +9,10 @@ export default async function SingleToDoHandler(req, res) {
     method,
     body,
   } = req;
+  const session = await getSession({ req });
   if (method === "DELETE") {
     await Todo.findByIdAndDelete(todo_id);
-    const todos = await Todo.find({});
+    const todos = await Todo.find({ userID: session.user.id }); 
     return res.status(200).json({
       message: `todo has been deleted successfully !`,
       todos,
@@ -30,7 +32,7 @@ export default async function SingleToDoHandler(req, res) {
     todo.deadline = new Date(moment(body.deadline).format("YYYY/MM/DD"));
     todo.category = body.category;
     todo.completed = body.completed;
-    await todo.save();
+    todo.userID = body.userID;
     return res.status(200).json({
       message: "todo updated successfully !",
     });

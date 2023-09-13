@@ -3,7 +3,6 @@ import { Schema, model, models } from "mongoose";
 const todoschema = new Schema({
   title: {
     type: String,
-    unique: true,
     required: true,
   },
   description: {
@@ -38,6 +37,11 @@ const todoschema = new Schema({
     type: String,
     required: true,
     default: "",
+  },
+  userID: {
+    type: String,
+    ref: "User",
+    required: true,
   },
 });
 
